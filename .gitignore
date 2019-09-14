@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings/
+log/
+target/
+TP_JPA_TAA.pdf
+run-hsqldb-server.sh
+show-hsqldb.sh
