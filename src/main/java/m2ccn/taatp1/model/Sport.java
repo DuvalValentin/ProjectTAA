@@ -1,6 +1,7 @@
 package m2ccn.taatp1.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ public class Sport
 {
 	private long id;
 	private String name;
-	private HashSet<Ville> villes;
+	private List<Ville> villes;
 	private long ventMin;
 	private long ventMax;
 	
@@ -23,6 +24,10 @@ public class Sport
 	private long houleMax;
 	
 	
+	public Sport()
+	{
+		villes=new ArrayList<Ville>();
+	}
 	
 	@Id
 	@GeneratedValue
@@ -40,10 +45,10 @@ public class Sport
 	}
 	
 	@ManyToMany
-	public HashSet<Ville> getVilles() {
+	public List<Ville> getVilles() {
 		return villes;
 	}
-	public void setVilles(HashSet<Ville> villes) {
+	public void setVilles(List<Ville> villes) {
 		this.villes = villes;
 	}
 	

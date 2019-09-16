@@ -1,6 +1,7 @@
 package m2ccn.taatp1.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -9,13 +10,31 @@ public class Ville
 {
 	
 	private long id;
+	private String name;
 	private Departement departement;
-	private HashSet<Sport> sports;
+	private List<Sport> sports;
+	
+	public Ville()
+	{
+		sports=new ArrayList<Sport>();
+	}
+	
+	public Ville(String name,Departement departement)
+	{
+		this.departement = departement;
+		this.name=name;
+		sports=new ArrayList<Sport>();
+	}
 
-	@OneToMany
-	public HashSet<Sport> getSports()
+	@ManyToMany
+	public List<Sport> getSports()
 	{
 		return sports;
+	}
+	
+	public void setSports(List<Sport> sports)
+	{
+		this.sports = sports;
 	}
 
 	@Id
@@ -38,6 +57,21 @@ public class Ville
 
 	public void setDepartement(Departement departement) 
 	{
+		if(this.departement!=null)
+		{
+			this.departement.removeVille(this);
+		}
 		this.departement = departement;
+		this.departement.addVille(this);
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 }

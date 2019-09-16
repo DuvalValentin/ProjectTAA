@@ -1,6 +1,7 @@
 package m2ccn.taatp1.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -8,13 +9,29 @@ import javax.persistence.*;
 public class Region 
 {
 	private long id;
+	private String name;
+	private List<Departement> departements;
 	
-	private HashSet<Departement> departements;
+	public Region()
+	{
+		departements=new ArrayList<Departement>();
+	}
+	
+	public Region(String name)
+	{
+		departements=new ArrayList<Departement>();
+		this.name=name;
+	}
 
 	@OneToMany
-	public HashSet<Departement> getDepartements() 
+	public List<Departement> getDepartements() 
 	{
 		return departements;
+	}
+	
+	public void setDepartements(List<Departement> departements)
+	{
+		this.departements = departements;
 	}
 	
 	@Id
@@ -37,5 +54,15 @@ public class Region
 	public void removeDepartement(Departement departement)
 	{
 		departements.remove(departement);
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 }
