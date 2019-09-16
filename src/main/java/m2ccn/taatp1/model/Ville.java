@@ -26,7 +26,7 @@ public class Ville
 		sports=new ArrayList<Sport>();
 	}
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "villes")
 	public List<Sport> getSports()
 	{
 		return sports;

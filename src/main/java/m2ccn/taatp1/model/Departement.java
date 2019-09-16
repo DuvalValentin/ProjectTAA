@@ -26,7 +26,7 @@ public class Departement
 		region.addDepartement(this);
 	}
 
-	@OneToMany
+	@OneToMany(mappedBy = "departement")
 	public List<Ville> getVilles() 
 	{
 		return villes;

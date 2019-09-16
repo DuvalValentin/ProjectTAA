@@ -12,6 +12,7 @@
 <property name="hibernate.connection.username" value="sa"/>
 <property name="hibernate.connection.password" value=""/>
 <property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://localhost/"/>
+<!---->
 </properties>
 </persistence-unit>
 <persistence-unit name="prod" transaction-type="RESOURCE_LOCAL">
@@ -44,9 +45,9 @@
 <property name="hibernate.archive.autodetection" value="class, hbm"/>
 <property name="hibernate.show_sql" value="true"/>
 <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-<property name="hibernate.connection.password" value="yourpass"/>
-<property name="hibernate.connection.url" value="jdbc:mysql://localhost/testjpa"/>
-<property name="hibernate.connection.username" value="root"/>
+<property name="hibernate.connection.username" value="user_vduval"/>
+<property name="hibernate.connection.password" value="pswdbdd"/>
+<property name="hibernate.connection.url" value="jdbc:mysql://mysql.istic.univ-rennes1.fr/base_vduval"/>
 <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 <property name="hibernate.c3p0.min_size" value="5"/>
 <property name="hibernate.c3p0.max_size" value="20"/>

@@ -3,7 +3,15 @@ package m2ccn.taatp1.service;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import m2ccn.taatp1.dao.*;
 import m2ccn.taatp1.model.*;
+
+@Path("/service")
 public class Service
 {
 	private EntityManager entityManager;
@@ -15,13 +23,10 @@ public class Service
 	
 	public static void main(String[] args)
 	{
-		System.err.println("il y a qqn ?");
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("dev");
-		System.err.println("Sharron!!!");
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("mysql");
 		EntityManager manager = factory.createEntityManager();
 		
 		Service service = new Service(manager);
-		
 		
 		EntityTransaction entityTransaction = manager.getTransaction();
 		
@@ -39,11 +44,11 @@ public class Service
 		{
 			e.printStackTrace();
 		}
-		System.err.println("passé par ici");
 		
 		entityTransaction.commit();
 		
 		service.displayCities();
+		service.displayDepartments();
 		
 		manager.close();
 		System.out.println("Fini");
@@ -80,6 +85,20 @@ public class Service
 		{
 			System.out.println(ville.getName());
 		}
+	}
+	@GET
+	@Path("/departements")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Departement> displayDepartments()
+	{
+		DepartementDAO departementDAO = new DepartementDAO(entityManager);
+		List<Departement> registeredDepartements = departementDAO.getDepartements();
+		System.out.println("Il y a "+registeredDepartements.size()+" departements.");
+		for(Departement departement : registeredDepartements)
+		{
+			System.out.println(departement.getName());
+		} 
+		return registeredDepartements;
 	}
 	
 	
