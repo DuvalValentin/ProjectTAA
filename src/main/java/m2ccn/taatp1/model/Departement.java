@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class Departement 
 {
@@ -17,7 +19,7 @@ public class Departement
 	{
 		villes=new ArrayList<Ville>();
 	}
-	
+	 
 	public Departement(String name,Region region)
 	{
 		this.name=name;
@@ -50,6 +52,7 @@ public class Departement
 	}
 
 	@ManyToOne
+	@JsonIgnore
 	public Region getRegion() 
 	{
 		return region;

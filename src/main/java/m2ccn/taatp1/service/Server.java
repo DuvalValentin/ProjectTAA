@@ -17,9 +17,9 @@ public class Server {
 
         UndertowJaxrsServer ut = new UndertowJaxrsServer();
 
-        //TestApplication ta = new TestApplication();
+        MyApplication ma = new MyApplication();
 
-        //ut.deploy(ta);
+        ut.deploy(ma);
 
         ut.start(
                 Undertow.builder()

@@ -65,7 +65,6 @@
 		<artifactId>resteasy-jackson-provider</artifactId>
 		<version>3.6.1.Final</version>
 	</dependency>
-
  	
   </dependencies>
 </project>

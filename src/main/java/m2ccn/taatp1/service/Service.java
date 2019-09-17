@@ -1,37 +1,52 @@
 package m2ccn.taatp1.service;
 
+//TODO mettre en place les DTO et tenter de réussir un POST
+
+//TODO mettre les services des sauvegarde et suppression de données dans les DAO
+
 import java.util.List;
 
 import javax.persistence.*;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import m2ccn.taatp1.dao.*;
+import m2ccn.taatp1.dto.*;
 import m2ccn.taatp1.model.*;
 
 @Path("/service")
 public class Service
 {
+	
 	private EntityManager entityManager;
+	private RegionDAO regionDAO;
+	private DepartementDAO departementDAO;
+	private VilleDAO villeDAO;
+	private SportDAO sportDAO;
 	
-	public Service(EntityManager entityManager)
-	{
-		this.entityManager=entityManager;
-	}
-	
-	public static void main(String[] args)
+	public Service()
 	{
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("mysql");
-		EntityManager manager = factory.createEntityManager();
-		
-		Service service = new Service(manager);
-		
+		entityManager = factory.createEntityManager();
+		regionDAO = new RegionDAO(entityManager);
+		departementDAO = new DepartementDAO(entityManager);
+		villeDAO = new VilleDAO(entityManager);
+		sportDAO=new SportDAO(entityManager);
+	}
+	public EntityManager getEntityManager()
+	{
+		return entityManager;
+	}
+	public void setEntityManager(EntityManager entityManager)
+	{
+		this.entityManager = entityManager;
+	}
+	/*public static void main(String[] args)
+	{	
+		Service service = new Service();
+		EntityManager manager = service.getEntityManager();
 		EntityTransaction entityTransaction = manager.getTransaction();
-		
 		entityTransaction.begin();
-		
 		try
 		{
 			List<Region> regions = manager.createQuery("SELECT r FROM Region r",Region.class).getResultList();
@@ -47,7 +62,7 @@ public class Service
 		
 		entityTransaction.commit();
 		
-		service.displayCities();
+		service.displayVilles();
 		service.displayDepartments();
 		
 		manager.close();
@@ -76,30 +91,55 @@ public class Service
 		entityManager.persist(plouzane);
 		entityManager.persist(brest);
 	}
+	*/
 	
-	private void displayCities()
+	@GET
+	@Path("/villes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Ville> getVilles()
 	{
-		List<Ville> registeredVilles = entityManager.createQuery("SELECT v FROM Ville AS v",Ville.class).getResultList();
-		System.out.println("Il y a "+registeredVilles.size()+" villes.");
-		for(Ville ville : registeredVilles)
-		{
-			System.out.println(ville.getName());
-		}
+		return villeDAO.getAll();
 	}
+	
 	@GET
 	@Path("/departements")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Departement> displayDepartments()
+	public List<Departement> getDepartements()
 	{
-		DepartementDAO departementDAO = new DepartementDAO(entityManager);
-		List<Departement> registeredDepartements = departementDAO.getDepartements();
-		System.out.println("Il y a "+registeredDepartements.size()+" departements.");
-		for(Departement departement : registeredDepartements)
-		{
-			System.out.println(departement.getName());
-		} 
-		return registeredDepartements;
+		return departementDAO.getAll(); 
 	}
 	
+	@POST
+	@Path("/departements/ajout")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Departement addDepartement(DepartementDTO departementDTO)
+	{
+		return departementDAO.save(departementDTO);
+	}
 	
+	@GET
+	@Path("/regions")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Region> getRegions()
+	{
+		return regionDAO.getAll();
+	}
+	
+	@POST
+	@Path("/regions/ajout")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Region addRegion(RegionDTO regionDTO)
+	{
+		return regionDAO.save(regionDTO);
+	}
+	
+	@GET
+	@Path("/sports")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Sport> getSports()
+	{
+		return sportDAO.getAll();
+	}
 }

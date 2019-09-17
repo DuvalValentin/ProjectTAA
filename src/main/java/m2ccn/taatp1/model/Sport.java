@@ -5,9 +5,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class Sport 
 {
+	
+	//TODO demander si on peut faire un pattern décorateur pour le sport
 	private long id;
 	private String name;
 	private List<Ville> villes;
@@ -45,6 +49,7 @@ public class Sport
 	}
 	
 	@ManyToMany
+	@JsonIgnore
 	public List<Ville> getVilles() {
 		return villes;
 	}

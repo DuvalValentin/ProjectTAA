@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class Ville 
 {
@@ -36,6 +38,11 @@ public class Ville
 	{
 		this.sports = sports;
 	}
+	
+	public void addSport()
+	{
+		//TODO
+	}
 
 	@Id
 	@GeneratedValue
@@ -50,6 +57,7 @@ public class Ville
 	}
 
 	@ManyToOne
+	@JsonIgnore
 	public Departement getDepartement() 
 	{
 		return departement;
