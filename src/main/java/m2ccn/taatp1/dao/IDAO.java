@@ -2,8 +2,11 @@ package m2ccn.taatp1.dao;
 
 import java.util.List;
 
-public interface IDAO<Element>
+import m2ccn.taatp1.dto.IDTO;
+
+public interface IDAO<E>
 {
-	Element getById(long id);
-	List<Element> getAll();
+	E getById(long id);
+	List<E> getAll();
+	E save (IDTO<E> elementDTO);
 }

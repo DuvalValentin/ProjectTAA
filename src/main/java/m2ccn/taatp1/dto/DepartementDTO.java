@@ -2,7 +2,9 @@ package m2ccn.taatp1.dto;
 
 import java.util.List;
 
-public class DepartementDTO
+import m2ccn.taatp1.model.Departement;
+
+public class DepartementDTO implements IDTO<Departement>
 {
 	private long id;
 	private String name;

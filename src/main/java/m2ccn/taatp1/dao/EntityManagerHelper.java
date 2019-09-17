@@ -46,4 +46,12 @@ public class EntityManagerHelper {
 	public static void commit() {
 		getEntityManager().getTransaction().commit();
 	}
+	
+	public static void persist(Object entity) {
+		 getEntityManager().persist(entity);;
+	}
+	
+	public static void remove(Object entity) {
+		 getEntityManager().remove(entity);;
+	}
 }

@@ -9,13 +9,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
-public abstract class DAO<Element> implements IDAO<Element>
+import m2ccn.taatp1.dto.IDTO;
+
+public abstract class DAO<E> implements IDAO<E>
 {
 	
 	protected EntityManager entityManager;
 	protected CriteriaBuilder criteriaBuilder;
-	protected CriteriaQuery<Element> query;
-	protected Root<Element> root;
+	protected CriteriaQuery<E> query;
+	protected Root<E> root;
 	
 	public DAO()
 	{
@@ -23,20 +25,43 @@ public abstract class DAO<Element> implements IDAO<Element>
 		criteriaBuilder=entityManager.getCriteriaBuilder();
 	}
 	@Override
-	public Element getById(long id)
+	public E getById(long id)
 	{
 		ParameterExpression<Long> idParam = criteriaBuilder.parameter(Long.class);
-		TypedQuery<Element> typedQuery = entityManager.createQuery(query.select(root).where(criteriaBuilder.equal(root.get("id"), id))).setParameter(idParam, id);
-		Element element = typedQuery.getSingleResult();
+		TypedQuery<E> typedQuery = EntityManagerHelper.getEntityManager().createQuery(query.select(root).where(criteriaBuilder.equal(root.get("id"), idParam))).setParameter(idParam, id);
+		E element = typedQuery.getSingleResult();
 		return element;
 	}
 
 	@Override
-	public List<Element> getAll()
+	public List<E> getAll()
 	{
-		TypedQuery<Element> typedQuery = entityManager.createQuery(query.select(root));
-		List<Element> elements = typedQuery.getResultList();
+		TypedQuery<E> typedQuery = entityManager.createQuery(query.select(root));
+		List<E> elements = typedQuery.getResultList();
 		return elements;
 	}
+	
+	@Override
+	public E save(IDTO<E> elementDTO)
+	{
+		EntityManagerHelper.beginTransaction();
+		E element = elementFromDTO(elementDTO);
+		EntityManagerHelper.persist(element);
+		EntityManagerHelper.commit();
+		return element;
+	}
+	
+	public void deleteById(long id)
+	{
+		EntityManagerHelper.beginTransaction();
+		E element = getById(id);
+		EntityManagerHelper.remove(element);
+		EntityManagerHelper.commit();
+		//return element;
+	}
+	
+	protected abstract E elementFromDTO(IDTO<E> elementDTO);
+	
+	
 
 }

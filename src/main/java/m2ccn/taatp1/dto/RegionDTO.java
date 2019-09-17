@@ -2,7 +2,9 @@ package m2ccn.taatp1.dto;
 
 import java.util.List;
 
-public class RegionDTO
+import m2ccn.taatp1.model.Region;
+
+public class RegionDTO implements IDTO<Region>
 {
 	public RegionDTO(){}
 	
