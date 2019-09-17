@@ -17,9 +17,9 @@ public abstract class DAO<Element> implements IDAO<Element>
 	protected CriteriaQuery<Element> query;
 	protected Root<Element> root;
 	
-	public DAO(EntityManager entityManager)
+	public DAO()
 	{
-		this.entityManager=entityManager;
+		this.entityManager=EntityManagerHelper.getEntityManager();
 		criteriaBuilder=entityManager.getCriteriaBuilder();
 	}
 	@Override

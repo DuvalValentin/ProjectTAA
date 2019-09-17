@@ -6,7 +6,6 @@ package m2ccn.taatp1.service;
 
 import java.util.List;
 
-import javax.persistence.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -17,8 +16,6 @@ import m2ccn.taatp1.model.*;
 @Path("/service")
 public class Service
 {
-	
-	private EntityManager entityManager;
 	private RegionDAO regionDAO;
 	private DepartementDAO departementDAO;
 	private VilleDAO villeDAO;
@@ -26,20 +23,10 @@ public class Service
 	
 	public Service()
 	{
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("mysql");
-		entityManager = factory.createEntityManager();
-		regionDAO = new RegionDAO(entityManager);
-		departementDAO = new DepartementDAO(entityManager);
-		villeDAO = new VilleDAO(entityManager);
-		sportDAO=new SportDAO(entityManager);
-	}
-	public EntityManager getEntityManager()
-	{
-		return entityManager;
-	}
-	public void setEntityManager(EntityManager entityManager)
-	{
-		this.entityManager = entityManager;
+		regionDAO = new RegionDAO();
+		departementDAO = new DepartementDAO();
+		villeDAO = new VilleDAO();
+		sportDAO=new SportDAO();
 	}
 	/*public static void main(String[] args)
 	{	
