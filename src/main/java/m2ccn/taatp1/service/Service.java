@@ -11,7 +11,7 @@ import m2ccn.taatp1.dao.*;
 import m2ccn.taatp1.dto.*;
 import m2ccn.taatp1.model.*;
 
-@Path("/service")
+@Path("service")
 public class Service
 {
 	private RegionDAO regionDAO;
