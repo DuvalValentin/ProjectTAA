@@ -9,9 +9,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
-import m2ccn.taatp1.dto.IDTO;
+import m2ccn.taatp1.model.ModelElement;
 
-public abstract class DAO<E> implements IDAO<E>
+public abstract class DAO<E extends ModelElement> implements IDAO<E>
 {
 	
 	protected EntityManager entityManager;
@@ -42,25 +42,35 @@ public abstract class DAO<E> implements IDAO<E>
 	}
 	
 	@Override
-	public E save(IDTO<E> elementDTO)
+	public E save(E element)
 	{
 		EntityManagerHelper.beginTransaction();
-		E element = elementFromDTO(elementDTO);
 		EntityManagerHelper.persist(element);
 		EntityManagerHelper.commit();
-		return element;
+		E savedElement=getById(element.getId());
+		return savedElement;
 	}
 	
+	@Override
 	public void deleteById(long id)
 	{
 		EntityManagerHelper.beginTransaction();
 		E element = getById(id);
 		EntityManagerHelper.remove(element);
 		EntityManagerHelper.commit();
-		//return element;
 	}
 	
-	protected abstract E elementFromDTO(IDTO<E> elementDTO);
+	@Override
+	public E update(E element)
+	{
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.update(element);
+		EntityManagerHelper.commit();
+		E modifiedElement = getById(element.getId());
+		return modifiedElement;
+	}
+	
+	
 	
 	
 

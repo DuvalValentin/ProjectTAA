@@ -48,10 +48,15 @@ public class EntityManagerHelper {
 	}
 	
 	public static void persist(Object entity) {
-		 getEntityManager().persist(entity);;
+		getEntityManager().persist(entity);
 	}
 	
 	public static void remove(Object entity) {
-		 getEntityManager().remove(entity);;
+		 getEntityManager().remove(entity);
+	}
+	
+	public static void update(Object entity)
+	{
+		getEntityManager().refresh(entity);
 	}
 }

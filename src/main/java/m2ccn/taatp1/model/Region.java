@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class Region 
+public class Region implements ModelElement
 {
 	private long id;
 	private String name;
@@ -48,7 +48,10 @@ public class Region
 
 	public void addDepartement(Departement departement)
 	{
-		departements.add(departement);
+		if(!departements.contains(departement))
+		{
+			departements.add(departement);
+		}
 	}
 	
 	public void removeDepartement(Departement departement)

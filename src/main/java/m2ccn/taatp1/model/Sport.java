@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
-public class Sport 
+public class Sport implements ModelElement
 {
 	
 	//TODO demander si on peut faire un pattern décorateur pour le sport

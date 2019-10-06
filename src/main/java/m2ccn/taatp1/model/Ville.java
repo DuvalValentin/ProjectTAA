@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
-public class Ville 
+public class Ville implements ModelElement
 {
 	
 	private long id;
@@ -27,6 +27,14 @@ public class Ville
 		this.name=name;
 		sports=new ArrayList<Sport>();
 	}
+	
+	public Ville(long id,String name,Departement departement,List<Sport> sports)
+	{
+		this.id=id;
+		this.name=name;
+		this.departement=departement;
+		this.sports=sports;
+	}
 
 	@ManyToMany(mappedBy = "villes")
 	public List<Sport> getSports()
@@ -39,9 +47,17 @@ public class Ville
 		this.sports = sports;
 	}
 	
-	public void addSport()
+	public void addSport(Sport sport)
 	{
-		//TODO
+		if(!sports.contains(sport))
+		{
+			sports.add(sport);
+		}
+	}
+	
+	public void removeSport(Sport sport)
+	{
+		sports.remove(sport);
 	}
 
 	@Id

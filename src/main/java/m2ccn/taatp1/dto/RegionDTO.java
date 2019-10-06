@@ -6,11 +6,20 @@ import m2ccn.taatp1.model.Region;
 
 public class RegionDTO implements IDTO<Region>
 {
-	public RegionDTO(){}
-	
 	private long id;
 	private String name;
 	private List<Long> idDepartements;
+	
+	public RegionDTO(){}
+	
+	public RegionDTO(long id,String name, List<Long> idDepartements)
+	{
+		this.id=id;
+		this.name=name;
+		this.idDepartements=idDepartements;
+	}
+	
+	
 	public long getId()
 	{
 		return id;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import m2ccn.taatp1.model.Departement;
 
-public class DepartementDTO implements IDTO<Departement>
+public class DepartementDTO extends DepartementCreationTO implements IDTO<Departement>
 {
 	private long id;
 	private String name;
@@ -59,5 +59,11 @@ public class DepartementDTO implements IDTO<Departement>
 	public void setIdVilles(List<Long> idVilles)
 	{
 		this.idVilles = idVilles;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return("Name : "+name+" Villes : "+idVilles);
 	}
 }

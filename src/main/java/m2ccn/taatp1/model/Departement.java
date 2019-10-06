@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
-public class Departement 
+public class Departement implements ModelElement
 {
 	private long id;
 	private String name;
@@ -26,6 +26,14 @@ public class Departement
 		this.region=region;
 		villes=new ArrayList<Ville>();
 		region.addDepartement(this);
+	}
+	
+	public Departement(Long id,String name,Region region, List<Ville>villes)
+	{
+		this.id=id;
+		this.name=name;
+		this.region=region;
+		this.villes=villes;
 	}
 
 	@OneToMany(mappedBy = "departement")
@@ -80,11 +88,20 @@ public class Departement
 	
 	public void addVille(Ville ville)
 	{
-		villes.add(ville);
+		if(!villes.contains(ville))
+		{
+			villes.add(ville);
+		}
 	}
 	
 	public void removeVille(Ville ville)
 	{
 		this.villes.remove(ville);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return("Name : "+name+" Villes : "+villes);
 	}
 }
