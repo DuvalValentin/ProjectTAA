@@ -21,7 +21,7 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	
 	public DAO()
 	{
-		this.entityManager=EntityManagerHelper.getEntityManager();
+		entityManager=EntityManagerHelper.getEntityManager();
 		criteriaBuilder=entityManager.getCriteriaBuilder();
 	}
 	@Override

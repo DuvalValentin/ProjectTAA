@@ -1,5 +1,6 @@
 package m2ccn.taatp1.endpoint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -11,9 +12,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import m2ccn.taatp1.dao.DepartementDAO;
 import m2ccn.taatp1.dao.VilleDAO;
 import m2ccn.taatp1.dto.VilleCreationTO;
 import m2ccn.taatp1.dto.VilleDTO;
+import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Ville;
 import m2ccn.taatp1.transformer.VilleT;
 
@@ -40,6 +43,23 @@ public class VilleEP extends EndPoint<Ville,VilleDTO,VilleCreationTO>
 	public VilleDTO getById(@PathParam("id")long id)
 	{
 		return super.getById(id);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("byDepartmentId/{departementId}")
+	public List<VilleDTO> getByDepartmentId(@PathParam("departementId") long departesmentId)
+	{
+		DepartementDAO departementDAO=new DepartementDAO();
+		Departement departement = departementDAO.getById(departesmentId);
+		List<Ville> villes = ((VilleDAO)dao).getByDepartement(departement);
+		List<VilleDTO> villesTO = new ArrayList<VilleDTO>();
+		for(Ville ville : villes)
+		{
+			VilleDTO villeTO = (VilleDTO) transformer.getDTOFromElement(ville);
+			villesTO.add(villeTO);
+		}
+		return villesTO;
 	}
 	
 	@POST
