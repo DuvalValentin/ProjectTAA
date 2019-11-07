@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -38,12 +39,11 @@ public class RegionEP extends EndPoint<Region,RegionDTO,RegionCreationTO>
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
 	@Override
-	public RegionDTO getById(@PathParam("id")long id)
+	public RegionDTO getById(@PathParam("id")long id) throws NotFoundException
 	{
 		return super.getById(id);
 	}
 	
-	//FIXME pas bon ici
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

@@ -3,6 +3,7 @@ package m2ccn.taatp1.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,7 +26,7 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 		criteriaBuilder=entityManager.getCriteriaBuilder();
 	}
 	@Override
-	public E getById(long id)
+	public E getById(long id) throws NoResultException
 	{
 		ParameterExpression<Long> idParam = criteriaBuilder.parameter(Long.class);
 		TypedQuery<E> typedQuery = EntityManagerHelper.getEntityManager().createQuery(query.select(root).where(criteriaBuilder.equal(root.get("id"), idParam))).setParameter(idParam, id);

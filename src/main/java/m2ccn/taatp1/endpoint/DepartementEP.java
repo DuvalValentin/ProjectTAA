@@ -3,9 +3,11 @@ package m2ccn.taatp1.endpoint;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -40,9 +42,15 @@ public class DepartementEP extends EndPoint<Departement,DepartementDTO,Departeme
 	@Override
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public DepartementDTO getById(@PathParam("id")long id)
+	public DepartementDTO getById(@PathParam("id")long id) throws NotFoundException
 	{
-		return  (DepartementDTO) super.getById(id);
+		try
+		{
+			return super.getById(id);
+		} catch (NoResultException e)
+		{
+			throw new NotFoundException();
+		}
 	}
 	
 	@GET

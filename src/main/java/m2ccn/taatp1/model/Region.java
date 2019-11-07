@@ -23,7 +23,7 @@ public class Region implements ModelElement
 		this.name=name;
 	}
 
-	@OneToMany(mappedBy = "region")
+	@OneToMany(mappedBy = "region",cascade = CascadeType.REMOVE)
 	public List<Departement> getDepartements() 
 	{
 		return departements;

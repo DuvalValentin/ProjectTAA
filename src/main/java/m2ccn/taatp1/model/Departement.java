@@ -36,7 +36,7 @@ public class Departement implements ModelElement
 		this.villes=villes;
 	}
 
-	@OneToMany(mappedBy = "departement")
+	@OneToMany(mappedBy = "departement",cascade = CascadeType.REMOVE)
 	public List<Ville> getVilles() 
 	{
 		return villes;
