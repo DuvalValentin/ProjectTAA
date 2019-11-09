@@ -15,7 +15,7 @@ public class RegionAO extends DAO<Region>
 	public Region transpose(Region region)
 	{
 		Region regionToModify = super.transpose(region);
-		regionToModify.setDepartements(region.getDepartements());
+		//regionToModify.setDepartements(region.getDepartements());Ne change rien au résultat => à conserver
 		return regionToModify;
 	}
 }

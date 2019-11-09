@@ -29,7 +29,7 @@ public class VilleAO extends DAO<Ville>
 	{
 		Ville villeToModify = super.transpose(ville);
 		villeToModify.setDepartement(ville.getDepartement());
-		villeToModify.setSports(ville.getSports());
+		//villeToModify.setSports(ville.getSports()); Ne change rien au résultat => à conserver
 		return villeToModify;
 	}
 }

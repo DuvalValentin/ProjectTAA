@@ -28,7 +28,7 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	public E getById(long id) throws NoResultException
 	{
 		ParameterExpression<Long> idParam = criteriaBuilder.parameter(Long.class);
-		TypedQuery<E> typedQuery = EntityManagerHelper.getEntityManager().createQuery(query.select(root).where(criteriaBuilder.equal(root.get("id"), idParam))).setParameter(idParam, id);
+		TypedQuery<E> typedQuery = entityManager.createQuery(query.select(root).where(criteriaBuilder.equal(root.get("id"), idParam))).setParameter(idParam, id);
 		E element = typedQuery.getSingleResult();
 		return element;
 	}
@@ -36,7 +36,7 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	@Override
 	public List<E> getAll()
 	{
-		TypedQuery<E> typedQuery = entityManager.createQuery(query.select(root));
+		TypedQuery<E> typedQuery = entityManager.createQuery(query);
 		List<E> elements = typedQuery.getResultList();
 		return elements;
 	}
@@ -69,7 +69,6 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 		EntityManagerHelper.commit();
 		E modifiedElement = getById(element.getId());
 		return modifiedElement;
-		//FIXME ne mets pas à jour les sports et les sports ne marchent pas(entre autres).
 	}
 	
 	@Override

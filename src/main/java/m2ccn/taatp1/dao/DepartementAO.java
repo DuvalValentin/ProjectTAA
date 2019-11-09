@@ -29,7 +29,7 @@ public class DepartementAO extends DAO<Departement>
 	{
 		Departement departmentToModify = super.transpose(departement);
 		departmentToModify.setRegion(departement.getRegion());
-		departmentToModify.setVilles(departement.getVilles());
+		//departmentToModify.setVilles(departement.getVilles());Ne change rien au résultat => à conserver
 		return departmentToModify;
 	}
 }
