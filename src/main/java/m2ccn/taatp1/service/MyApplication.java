@@ -7,6 +7,7 @@ import app.web.rest.SwaggerResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import m2ccn.taatp1.endpoint.DepartementEP;
 import m2ccn.taatp1.endpoint.RegionEP;
+import m2ccn.taatp1.endpoint.SportEP;
 import m2ccn.taatp1.endpoint.VilleEP;
 
 import java.util.HashSet;
@@ -23,6 +24,7 @@ public class MyApplication extends Application
         classes.add(VilleEP.class);
         classes.add(DepartementEP.class);
         classes.add(RegionEP.class);
+        classes.add(SportEP.class);
         classes.add(SwaggerResource.class);
         return classes;
     }

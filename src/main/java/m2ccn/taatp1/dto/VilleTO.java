@@ -4,16 +4,16 @@ import java.util.List;
 
 import m2ccn.taatp1.model.Ville;
 
-public class VilleDTO implements IDTO<Ville>
+public class VilleTO implements IDTO<Ville>
 {
 	private long id;
 	private String name;
 	private long idDepartement;
 	private List<Long> idSports;
 	
-	public VilleDTO(){}
+	public VilleTO(){}
 	
-	public VilleDTO(long id, String name,long idDepartement, List<Long> idSports)
+	public VilleTO(long id, String name,long idDepartement, List<Long> idSports)
 	{
 		this.id=id;
 		this.name=name;

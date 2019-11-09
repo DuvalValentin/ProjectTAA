@@ -8,9 +8,9 @@ import javax.persistence.criteria.ParameterExpression;
 import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Region;
 
-public class DepartementDAO extends DAO<Departement>
+public class DepartementAO extends DAO<Departement>
 {
-	public DepartementDAO()
+	public DepartementAO()
 	{
 		query = criteriaBuilder.createQuery(Departement.class);
 		root = query.from(Departement.class);
@@ -22,5 +22,14 @@ public class DepartementDAO extends DAO<Departement>
 		TypedQuery<Departement> typedQuery = entityManager.createQuery(query.select(root).where(criteriaBuilder.equal(root.get("region"), param))).setParameter(param, region);
 		List<Departement> departements = typedQuery.getResultList();
 		return departements;
+	}
+	
+	@Override
+	public Departement transpose (Departement departement)
+	{
+		Departement departmentToModify = super.transpose(departement);
+		departmentToModify.setRegion(departement.getRegion());
+		departmentToModify.setVilles(departement.getVilles());
+		return departmentToModify;
 	}
 }

@@ -1,36 +1,36 @@
-package m2ccn.taatp1.transformer;
+package m2ccn.taatp1.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import m2ccn.taatp1.dao.DepartementDAO;
+import m2ccn.taatp1.dao.DepartementAO;
 import m2ccn.taatp1.dto.ICreationDTO;
 import m2ccn.taatp1.dto.IDTO;
 import m2ccn.taatp1.dto.RegionCreationTO;
-import m2ccn.taatp1.dto.RegionDTO;
+import m2ccn.taatp1.dto.RegionTO;
 import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Region;
 
-public class RegionT extends Transformer<Region>
+public class RegionM extends Mapper<Region>
 {
-	private DepartementDAO departementDAO;
+	private DepartementAO departementAO;
 	
-	public RegionT()
+	public RegionM()
 	{
-		departementDAO=new DepartementDAO();
+		departementAO=new DepartementAO();
 	}
 	
 
 	@Override
 	public Region getElementFromDTO(IDTO<Region> elementDTO)
 	{
-		RegionDTO regionDTO = (RegionDTO) elementDTO;
+		RegionTO regionDTO = (RegionTO) elementDTO;
 		List<Departement> departements = new ArrayList<Departement>();
 		for (Long id : regionDTO.getIdDepartements())
 		{
-			departements.add(departementDAO.getById(id));
+			departements.add(departementAO.getById(id));
 		}
-		Region region = new Region(regionDTO.getName());
+		Region region = new Region(regionDTO.getName(),departements);
 		return region;
 	}
 	
@@ -50,7 +50,7 @@ public class RegionT extends Transformer<Region>
 		{
 			departementsId.add(departement.getId());
 		}
-		RegionDTO regionDTO=new RegionDTO(element.getId(),element.getName(),departementsId);
+		RegionTO regionDTO=new RegionTO(element.getId(),element.getName(),departementsId);
 		return (IDTO<Region>)regionDTO;
 	}
 }

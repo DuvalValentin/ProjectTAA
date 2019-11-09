@@ -1,4 +1,4 @@
-package m2ccn.taatp1.endpoint;
+package m2ccn.taatp1.errorHandler;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
@@ -10,8 +10,6 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 {
     public Response toResponse(NotFoundException exception) 
     {
-        return Response.status(Response.Status.NOT_FOUND)
-                .entity("No such resource")
-                .build();
+        return Response.status(Response.Status.NOT_FOUND).entity("No such resource").build();
     }
 }

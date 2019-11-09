@@ -22,6 +22,12 @@ public class Region implements ModelElement
 		departements=new ArrayList<Departement>();
 		this.name=name;
 	}
+	
+	public Region(String name,List<Departement> departements)
+	{
+		this.departements=departements;
+		this.name=name;
+	}
 
 	@OneToMany(mappedBy = "region",cascade = CascadeType.REMOVE)
 	public List<Departement> getDepartements() 

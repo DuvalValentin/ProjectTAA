@@ -10,11 +10,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 public class Sport implements ModelElement
 {
-	
-	//TODO demander si on peut faire un pattern décorateur pour le sport
 	private long id;
 	private String name;
 	private List<Ville> villes;
+	
+	//TODO utiliser tous ces attributs
 	private long ventMin;
 	private long ventMax;
 	
@@ -33,6 +33,19 @@ public class Sport implements ModelElement
 		villes=new ArrayList<Ville>();
 	}
 	
+	public Sport(String name)
+	{
+		villes=new ArrayList<Ville>();
+		this.name=name;
+	}
+	
+	public Sport(long id,String name,List<Ville> villes)
+	{
+		this.id=id;
+		this.name=name;
+		this.villes=villes;
+	}
+	
 	@Id
 	@GeneratedValue
 	public long getId() {
@@ -48,7 +61,7 @@ public class Sport implements ModelElement
 		this.name = name;
 	}
 	
-	@ManyToMany
+	@ManyToMany()
 	@JsonIgnore
 	public List<Ville> getVilles() {
 		return villes;

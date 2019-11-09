@@ -1,40 +1,40 @@
-package m2ccn.taatp1.transformer;
+package m2ccn.taatp1.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import m2ccn.taatp1.dao.DepartementDAO;
+import m2ccn.taatp1.dao.DepartementAO;
 import m2ccn.taatp1.dao.IDAO;
-import m2ccn.taatp1.dao.SportDAO;
+import m2ccn.taatp1.dao.SportAO;
 import m2ccn.taatp1.dto.ICreationDTO;
 import m2ccn.taatp1.dto.IDTO;
 import m2ccn.taatp1.dto.VilleCreationTO;
-import m2ccn.taatp1.dto.VilleDTO;
+import m2ccn.taatp1.dto.VilleTO;
 import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Sport;
 import m2ccn.taatp1.model.Ville;
 
-public class VilleT extends Transformer<Ville>
+public class VilleM extends Mapper<Ville>
 {
-	private IDAO<Departement> departementDAO;
+	private IDAO<Departement> departementAO;
 	private IDAO<Sport> sportAO;
 	
-	public VilleT()
+	public VilleM()
 	{
-		departementDAO = new DepartementDAO();
-		sportAO=new SportDAO();
+		departementAO = new DepartementAO();
+		sportAO=new SportAO();
 	}
 
 	@Override
 	public Ville getElementFromDTO(IDTO<Ville> elementDTO)
 	{
-		VilleDTO villeDTO = (VilleDTO) elementDTO;
+		VilleTO villeDTO = (VilleTO) elementDTO;
 		List<Sport> sports = new ArrayList<Sport>();
 		for(long idSport : villeDTO.getIdSports())
 		{
 			sports.add(sportAO.getById(idSport));
 		}
-		Ville ville = new Ville(villeDTO.getId(),villeDTO.getName(),departementDAO.getById(villeDTO.getIdDepartement()),sports);
+		Ville ville = new Ville(villeDTO.getId(),villeDTO.getName(),departementAO.getById(villeDTO.getIdDepartement()),sports);
 		return ville;
 	}
 	
@@ -42,7 +42,7 @@ public class VilleT extends Transformer<Ville>
 	public Ville getElementFromDTO(ICreationDTO elementDTO)
 	{
 		VilleCreationTO villeDTO = (VilleCreationTO) elementDTO;
-		Ville ville = new Ville(villeDTO.getName(),departementDAO.getById(villeDTO.getIdDepartement()));
+		Ville ville = new Ville(villeDTO.getName(),departementAO.getById(villeDTO.getIdDepartement()));
 		return ville;
 	}
 
@@ -54,7 +54,7 @@ public class VilleT extends Transformer<Ville>
 		{
 			sportsId.add(sport.getId());
 		}
-		VilleDTO villeTO = new VilleDTO(ville.getId(), ville.getName(), ville.getDepartement().getId(), sportsId);		
+		VilleTO villeTO = new VilleTO(ville.getId(), ville.getName(), ville.getDepartement().getId(), sportsId);		
 		return villeTO;
 	}
 

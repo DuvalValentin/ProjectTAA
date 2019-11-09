@@ -57,6 +57,6 @@ public class EntityManagerHelper {
 	
 	public static void update(Object entity)
 	{
-		getEntityManager().refresh(entity);
+		getEntityManager().merge(entity);
 	}
 }

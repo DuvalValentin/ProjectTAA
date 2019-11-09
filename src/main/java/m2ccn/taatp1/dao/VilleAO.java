@@ -8,9 +8,9 @@ import javax.persistence.criteria.ParameterExpression;
 import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Ville;
 
-public class VilleDAO extends DAO<Ville>
+public class VilleAO extends DAO<Ville>
 {
-	public VilleDAO()
+	public VilleAO()
 	{
 		query = criteriaBuilder.createQuery(Ville.class);
 		root = query.from(Ville.class);
@@ -22,5 +22,14 @@ public class VilleDAO extends DAO<Ville>
 		TypedQuery<Ville> typedQuery = entityManager.createQuery(query.select(root).where(criteriaBuilder.equal(root.get("departement"), param))).setParameter(param, departement);
 		List<Ville> villes = typedQuery.getResultList();
 		return villes;
+	}
+	
+	@Override
+	public Ville transpose(Ville ville)
+	{
+		Ville villeToModify = super.transpose(ville);
+		villeToModify.setDepartement(ville.getDepartement());
+		villeToModify.setSports(ville.getSports());
+		return villeToModify;
 	}
 }

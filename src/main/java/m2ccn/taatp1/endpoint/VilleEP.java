@@ -7,31 +7,32 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import m2ccn.taatp1.dao.DepartementDAO;
-import m2ccn.taatp1.dao.VilleDAO;
+import m2ccn.taatp1.dao.DepartementAO;
+import m2ccn.taatp1.dao.VilleAO;
 import m2ccn.taatp1.dto.VilleCreationTO;
-import m2ccn.taatp1.dto.VilleDTO;
+import m2ccn.taatp1.dto.VilleTO;
+import m2ccn.taatp1.mapper.VilleM;
 import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Ville;
-import m2ccn.taatp1.transformer.VilleT;
 
 @Path("/ville")
-public class VilleEP extends EndPoint<Ville,VilleDTO,VilleCreationTO>
+public class VilleEP extends EndPoint<Ville,VilleTO,VilleCreationTO>
 {
 	public VilleEP()
 	{
-		super(new VilleDAO(), new VilleT());
+		super(new VilleAO(), new VilleM());
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public List<VilleDTO> getAll()
+	public List<VilleTO> getAll()
 	{
 		return super.getAll();
 	}
@@ -40,7 +41,7 @@ public class VilleEP extends EndPoint<Ville,VilleDTO,VilleCreationTO>
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
 	@Override
-	public VilleDTO getById(@PathParam("id")long id)
+	public VilleTO getById(@PathParam("id")long id)
 	{
 		return super.getById(id);
 	}
@@ -48,15 +49,15 @@ public class VilleEP extends EndPoint<Ville,VilleDTO,VilleCreationTO>
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("byDepartmentId/{departementId}")
-	public List<VilleDTO> getByDepartmentId(@PathParam("departementId") long departesmentId)
+	public List<VilleTO> getByDepartmentId(@PathParam("departementId") long departementId)
 	{
-		DepartementDAO departementDAO=new DepartementDAO();
-		Departement departement = departementDAO.getById(departesmentId);
-		List<Ville> villes = ((VilleDAO)dao).getByDepartement(departement);
-		List<VilleDTO> villesTO = new ArrayList<VilleDTO>();
+		DepartementAO departementDAO=new DepartementAO();
+		Departement departement = departementDAO.getById(departementId);
+		List<Ville> villes = ((VilleAO)dao).getByDepartement(departement);
+		List<VilleTO> villesTO = new ArrayList<VilleTO>();
 		for(Ville ville : villes)
 		{
-			VilleDTO villeTO = (VilleDTO) transformer.getDTOFromElement(ville);
+			VilleTO villeTO = (VilleTO) mapper.getDTOFromElement(ville);
 			villesTO.add(villeTO);
 		}
 		return villesTO;
@@ -66,9 +67,18 @@ public class VilleEP extends EndPoint<Ville,VilleDTO,VilleCreationTO>
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public VilleDTO create(VilleCreationTO villeTo)
+	public VilleTO create(VilleCreationTO villeTo)
 	{
 		return super.create(villeTo);
+	}
+	
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Override
+	public VilleTO modify(VilleTO villeTo)
+	{
+		return super.modify(villeTo);
 	}
 	
 	@DELETE

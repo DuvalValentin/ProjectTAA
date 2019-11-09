@@ -4,16 +4,16 @@ import java.util.List;
 
 import m2ccn.taatp1.model.Departement;
 
-public class DepartementDTO extends DepartementCreationTO implements IDTO<Departement>
+public class DepartementTO extends DepartementCreationTO implements IDTO<Departement>
 {
 	private long id;
 	private String name;
 	private long idRegion;
 	private List<Long> idVilles;
 	
-	public DepartementDTO(){}
+	public DepartementTO(){}
 	
-	public DepartementDTO(long id, String name,long idRegion, List<Long> idVilles)
+	public DepartementTO(long id, String name,long idRegion, List<Long> idVilles)
 	{
 		this.id=id;
 		this.name=name;

@@ -14,7 +14,6 @@ import m2ccn.taatp1.model.ModelElement;
 
 public abstract class DAO<E extends ModelElement> implements IDAO<E>
 {
-	
 	protected EntityManager entityManager;
 	protected CriteriaBuilder criteriaBuilder;
 	protected CriteriaQuery<E> query;
@@ -65,14 +64,19 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	public E update(E element)
 	{
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.update(element);
+		E elementToModify = transpose(element);
+		EntityManagerHelper.update(elementToModify);
 		EntityManagerHelper.commit();
 		E modifiedElement = getById(element.getId());
 		return modifiedElement;
+		//FIXME ne mets pas à jour les sports et les sports ne marchent pas(entre autres).
 	}
 	
-	
-	
-	
-
+	@Override
+	public E transpose(E element)
+	{
+		E elementToModify = getById(element.getId());
+		elementToModify.setName(element.getName());
+		return elementToModify;
+	}
 }

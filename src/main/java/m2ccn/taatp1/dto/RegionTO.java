@@ -4,15 +4,15 @@ import java.util.List;
 
 import m2ccn.taatp1.model.Region;
 
-public class RegionDTO implements IDTO<Region>
+public class RegionTO implements IDTO<Region>
 {
 	private long id;
 	private String name;
 	private List<Long> idDepartements;
 	
-	public RegionDTO(){}
+	public RegionTO(){}
 	
-	public RegionDTO(long id,String name, List<Long> idDepartements)
+	public RegionTO(long id,String name, List<Long> idDepartements)
 	{
 		this.id=id;
 		this.name=name;

@@ -11,4 +11,5 @@ public interface IDAO<E extends ModelElement>
 	E save (E element);
 	void deleteById(long id);
 	E update(E element);
+	E transpose(E element);
 }

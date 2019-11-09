@@ -8,28 +8,28 @@ import javax.ws.rs.NotFoundException;
 import m2ccn.taatp1.dao.IDAO;
 import m2ccn.taatp1.dto.ICreationDTO;
 import m2ccn.taatp1.dto.IDTO;
+import m2ccn.taatp1.mapper.IMapper;
 import m2ccn.taatp1.model.ModelElement;
-import m2ccn.taatp1.transformer.ITransformer;
 
 @SuppressWarnings("unchecked")
 public abstract class EndPoint<E extends ModelElement, DTO extends IDTO<E>, CreationDTO extends ICreationDTO>
 {
 	protected IDAO<E> dao;
-	protected ITransformer<E> transformer;
+	protected IMapper<E> mapper;
 
-	public EndPoint(IDAO<E> dao, ITransformer<E> transformer)
+	public EndPoint(IDAO<E> dao, IMapper<E> transformer)
 	{
 		this.dao = dao;
-		this.transformer = transformer;
+		this.mapper = transformer;
 	}
-
+	
 	public List<DTO> getAll()
 	{
 		List<E> elements = dao.getAll();
 		List<DTO> elementsTO = new ArrayList<DTO>();
 		for (E element : elements)
 		{
-			DTO elementTO = (DTO) transformer.getDTOFromElement(element);
+			DTO elementTO = (DTO) mapper.getDTOFromElement(element);
 			elementsTO.add(elementTO);
 		}
 		return elementsTO;
@@ -40,7 +40,7 @@ public abstract class EndPoint<E extends ModelElement, DTO extends IDTO<E>, Crea
 		try
 		{
 			E element = dao.getById(id);
-			DTO elementTO = (DTO) transformer.getDTOFromElement(element);
+			DTO elementTO = (DTO) mapper.getDTOFromElement(element);
 			return elementTO;
 		} catch (Exception e)
 		{
@@ -49,19 +49,23 @@ public abstract class EndPoint<E extends ModelElement, DTO extends IDTO<E>, Crea
 		
 	}
 
-	// FIXME ne marche pas bien si le tableau de ville en entrée n'est pas vide
 	public DTO create(CreationDTO elementTO)
 	{
-		E element = transformer.getElementFromDTO(elementTO);
+		E element = mapper.getElementFromDTO(elementTO);
 		E savedElement = dao.save(element);
-		DTO savedElementTo = (DTO) transformer.getDTOFromElement(savedElement);
+		DTO savedElementTo = (DTO) mapper.getDTOFromElement(savedElement);
 		return savedElementTo;
 	}
 
-	/*
-	 * public IDTO<E> modify(IDTO<E> elementTO) { //TODO en cours E element =
-	 * transformer.getElementFromDTO(elementTO); return elementTO; }
-	 */
+	
+	 public DTO modify(DTO elementTO) 
+	 { 
+		 E element = mapper.getElementFromDTO(elementTO);
+		 E modifiedElement = dao.update(element);
+		 DTO modifiedElementTO = (DTO) mapper.getDTOFromElement(modifiedElement);
+		 return modifiedElementTO; 
+	 }
+	 
 
 	public void delete(long id)
 	{
