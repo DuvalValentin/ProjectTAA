@@ -1,5 +1,6 @@
 package m2ccn.taatp1.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import m2ccn.taatp1.model.Departement;
@@ -11,7 +12,10 @@ public class DepartementTO extends DepartementCreationTO implements IDTO<Departe
 	private long idRegion;
 	private List<Long> idVilles;
 	
-	public DepartementTO(){}
+	public DepartementTO()
+	{
+		this.idVilles=new ArrayList<Long>();//FIXME si c'est pas fait les put buguent
+	}
 	
 	public DepartementTO(long id, String name,long idRegion, List<Long> idVilles)
 	{

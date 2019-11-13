@@ -14,12 +14,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import m2ccn.taatp1.dao.SportAO;
-import m2ccn.taatp1.dao.VilleAO;
 import m2ccn.taatp1.dto.SportCreationTO;
 import m2ccn.taatp1.dto.SportTO;
 import m2ccn.taatp1.mapper.SportM;
 import m2ccn.taatp1.model.Sport;
-import m2ccn.taatp1.model.Ville;
 
 @Path("/sport")
 public class SportEP extends EndPoint<Sport, SportTO, SportCreationTO>
@@ -51,9 +49,7 @@ public class SportEP extends EndPoint<Sport, SportTO, SportCreationTO>
 	@Path("byVilleId/{villeId}")
 	public List<SportTO> getByVilleId(@PathParam("villeId") long villeId)
 	{
-		VilleAO villeAO=new VilleAO();
-		Ville ville = villeAO.getById(villeId);
-		List<Sport> sports = ((SportAO)dao).getByVille(ville);
+		List<Sport> sports = ((SportAO)dao).getByVilleId(villeId);
 		List<SportTO> sportsTO = new ArrayList<SportTO>();
 		for(Sport sport : sports)
 		{

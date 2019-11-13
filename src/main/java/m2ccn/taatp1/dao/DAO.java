@@ -36,7 +36,7 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	@Override
 	public List<E> getAll()
 	{
-		TypedQuery<E> typedQuery = entityManager.createQuery(query);
+		TypedQuery<E> typedQuery = entityManager.createQuery(query.select(root));
 		List<E> elements = typedQuery.getResultList();
 		return elements;
 	}
@@ -45,8 +45,14 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	public E save(E element)
 	{
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.persist(element);
-		EntityManagerHelper.commit();
+		try
+		{
+			EntityManagerHelper.persist(element);
+			EntityManagerHelper.commit();
+		} catch (Exception e)
+		{
+			EntityManagerHelper.rollback();
+		}
 		E savedElement=getById(element.getId());
 		return savedElement;
 	}
@@ -56,8 +62,18 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	{
 		EntityManagerHelper.beginTransaction();
 		E element = getById(id);
+		/*try
+		{
+			EntityManagerHelper.remove(element);
+			EntityManagerHelper.commit();
+			
+		} catch (Exception e)
+		{
+			EntityManagerHelper.rollback();
+		}*/
 		EntityManagerHelper.remove(element);
 		EntityManagerHelper.commit();
+		
 	}
 	
 	@Override
@@ -65,8 +81,15 @@ public abstract class DAO<E extends ModelElement> implements IDAO<E>
 	{
 		EntityManagerHelper.beginTransaction();
 		E elementToModify = transpose(element);
-		EntityManagerHelper.update(elementToModify);
-		EntityManagerHelper.commit();
+		try
+		{
+			EntityManagerHelper.update(elementToModify);
+			EntityManagerHelper.commit();
+			
+		} catch (Exception e)
+		{
+			EntityManagerHelper.rollback();
+		}
 		E modifiedElement = getById(element.getId());
 		return modifiedElement;
 	}

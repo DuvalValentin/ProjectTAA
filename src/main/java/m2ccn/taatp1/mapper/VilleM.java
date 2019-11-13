@@ -34,6 +34,7 @@ public class VilleM extends Mapper<Ville>
 		{
 			sports.add(sportAO.getById(idSport));
 		}
+		System.err.println(villeDTO.getId());
 		Ville ville = new Ville(villeDTO.getId(),villeDTO.getName(),departementAO.getById(villeDTO.getIdDepartement()),sports);
 		return ville;
 	}

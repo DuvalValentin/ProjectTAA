@@ -6,6 +6,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.ParameterExpression;
 
 import m2ccn.taatp1.model.Departement;
+import m2ccn.taatp1.model.Sport;
 import m2ccn.taatp1.model.Ville;
 
 public class VilleAO extends DAO<Ville>
@@ -22,6 +23,33 @@ public class VilleAO extends DAO<Ville>
 		TypedQuery<Ville> typedQuery = entityManager.createQuery(query.select(root).where(criteriaBuilder.equal(root.get("departement"), param))).setParameter(param, departement);
 		List<Ville> villes = typedQuery.getResultList();
 		return villes;
+	}
+	
+	public List<Ville> getByDepartementId(long departementId)
+	{
+		DepartementAO departementDAO=new DepartementAO();
+		Departement departement = departementDAO.getById(departementId);
+		return this.getByDepartement(departement);
+	}
+	
+	public List<Ville> getBySport(Sport sport)
+	{
+		TypedQuery<Ville> typedQuery = entityManager.createQuery
+				(
+						"SELECT v " + 
+						"FROM Ville v " + 
+						"JOIN v.sports s " + 
+						"WHERE s.id = "+sport.getId(),Ville.class
+				);
+		List<Ville> villes= typedQuery.getResultList();
+		return villes;
+	}
+	
+	public List<Ville> getBySportId(long sportId)
+	{
+		SportAO sportAO= new SportAO();
+		Sport sport = sportAO.getById(sportId);
+		return getBySport(sport);
 	}
 	
 	@Override

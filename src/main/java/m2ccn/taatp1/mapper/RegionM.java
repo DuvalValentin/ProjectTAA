@@ -25,12 +25,14 @@ public class RegionM extends Mapper<Region>
 	public Region getElementFromDTO(IDTO<Region> elementDTO)
 	{
 		RegionTO regionDTO = (RegionTO) elementDTO;
+		System.err.println(regionDTO.getName());
+		System.err.println(regionDTO.getIdDepartements());
 		List<Departement> departements = new ArrayList<Departement>();
 		for (Long id : regionDTO.getIdDepartements())
 		{
 			departements.add(departementAO.getById(id));
 		}
-		Region region = new Region(regionDTO.getName(),departements);
+		Region region = new Region(regionDTO.getId(),regionDTO.getName(),departements);
 		return region;
 	}
 	

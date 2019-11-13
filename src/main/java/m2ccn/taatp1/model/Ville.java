@@ -36,7 +36,7 @@ public class Ville implements ModelElement
 		this.sports=sports;
 	}
 
-	@ManyToMany(mappedBy = "villes",cascade = CascadeType.DETACH)
+	@ManyToMany(mappedBy = "villes",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	public List<Sport> getSports()
 	{
 		return sports;

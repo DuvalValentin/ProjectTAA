@@ -13,12 +13,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import m2ccn.taatp1.dao.DepartementAO;
 import m2ccn.taatp1.dao.VilleAO;
 import m2ccn.taatp1.dto.VilleCreationTO;
 import m2ccn.taatp1.dto.VilleTO;
 import m2ccn.taatp1.mapper.VilleM;
-import m2ccn.taatp1.model.Departement;
 import m2ccn.taatp1.model.Ville;
 
 @Path("/ville")
@@ -51,9 +49,7 @@ public class VilleEP extends EndPoint<Ville,VilleTO,VilleCreationTO>
 	@Path("byDepartmentId/{departementId}")
 	public List<VilleTO> getByDepartmentId(@PathParam("departementId") long departementId)
 	{
-		DepartementAO departementDAO=new DepartementAO();
-		Departement departement = departementDAO.getById(departementId);
-		List<Ville> villes = ((VilleAO)dao).getByDepartement(departement);
+		List<Ville> villes = ((VilleAO)dao).getByDepartementId(departementId);
 		List<VilleTO> villesTO = new ArrayList<VilleTO>();
 		for(Ville ville : villes)
 		{
@@ -61,6 +57,23 @@ public class VilleEP extends EndPoint<Ville,VilleTO,VilleCreationTO>
 			villesTO.add(villeTO);
 		}
 		return villesTO;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("bySportId/{sportId}")
+	public List<VilleTO> getBySportId(@PathParam("sportId") long sportId)
+	{
+		//FIXME le passage liste TO à liste model devrait être fait dans les mappers
+		List<Ville>villes=((VilleAO)dao).getBySportId(sportId);
+		List<VilleTO> villesTO = new ArrayList<VilleTO>();
+		for(Ville ville : villes)
+		{
+			VilleTO villeTO=(VilleTO) mapper.getDTOFromElement(ville);
+			villesTO.add(villeTO);
+		}
+		return villesTO;
+		
 	}
 	
 	@POST

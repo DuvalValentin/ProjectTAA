@@ -59,7 +59,7 @@ public abstract class EndPoint<E extends ModelElement, DTO extends IDTO<E>, Crea
 
 	
 	 public DTO modify(DTO elementTO) 
-	 { 
+	 {
 		 E element = mapper.getElementFromDTO(elementTO);
 		 E modifiedElement = dao.update(element);
 		 DTO modifiedElementTO = (DTO) mapper.getDTOFromElement(modifiedElement);

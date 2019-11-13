@@ -1,5 +1,6 @@
 package m2ccn.taatp1.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import m2ccn.taatp1.model.Sport;
@@ -11,7 +12,10 @@ public class SportTO implements IDTO<Sport>
 	private String name;
 	private List<Long> idVilles;
 	
-	public SportTO(){}
+	public SportTO()
+	{
+		this.idVilles=new ArrayList<Long>();//FIXME si c'est pas fait les put buguent
+	}
 	
 	
 

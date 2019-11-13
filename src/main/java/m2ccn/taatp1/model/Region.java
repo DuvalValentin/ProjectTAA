@@ -23,8 +23,9 @@ public class Region implements ModelElement
 		this.name=name;
 	}
 	
-	public Region(String name,List<Departement> departements)
+	public Region(Long id,String name,List<Departement> departements)
 	{
+		this.id=id;
 		this.departements=departements;
 		this.name=name;
 	}

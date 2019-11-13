@@ -1,5 +1,6 @@
 package m2ccn.taatp1.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import m2ccn.taatp1.model.Ville;
@@ -11,7 +12,10 @@ public class VilleTO implements IDTO<Ville>
 	private long idDepartement;
 	private List<Long> idSports;
 	
-	public VilleTO(){}
+	public VilleTO()
+	{
+		this.idSports=new ArrayList<Long>();//FIXME si c'est pas fait les put buguent
+	}
 	
 	public VilleTO(long id, String name,long idDepartement, List<Long> idSports)
 	{

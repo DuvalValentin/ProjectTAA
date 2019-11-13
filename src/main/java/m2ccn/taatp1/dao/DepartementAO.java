@@ -24,6 +24,14 @@ public class DepartementAO extends DAO<Departement>
 		return departements;
 	}
 	
+	public List<Departement>getByRegionId(long regionId)
+	{
+		RegionAO regionDAO=new RegionAO();
+		Region region = regionDAO.getById(regionId);
+		return this.getByRegion(region);
+
+	}
+	
 	@Override
 	public Departement transpose (Departement departement)
 	{
