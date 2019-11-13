@@ -39,6 +39,12 @@ public class Sport implements ModelElement
 		this.name=name;
 	}
 	
+	public Sport(String name,List<Ville> villes)
+	{
+		this.name=name;
+		this.villes=villes;
+	}
+	
 	public Sport(long id,String name,List<Ville> villes)
 	{
 		this.id=id;

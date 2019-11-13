@@ -38,7 +38,12 @@ public class SportM extends Mapper<Sport>
 	public Sport getElementFromDTO(ICreationDTO elementDTO)
 	{
 		SportCreationTO sportTO=(SportCreationTO)elementDTO;
-		Sport sport = new Sport(sportTO.getName());
+		List<Ville> villes = new ArrayList<Ville>();
+		for(Long id:sportTO.getIdVilles())
+		{
+			villes.add(villeAO.getById(id));
+		}
+		Sport sport = new Sport(sportTO.getName(),villes);
 		return sport;
 	}
 
